@@ -21,14 +21,14 @@ provider "template" {
 
 resource "random_uuid" "randomid" {}
 
-resource "aws_iam_user" "circleci" {
-  name = var.user
-  path = "/system/"
-}
+# resource "aws_iam_user" "circleci" {
+#   name = var.user
+#   path = "/system/"
+# }
 
-resource "aws_iam_access_key" "circleci" {
-  user = aws_iam_user.circleci.name
-}
+# resource "aws_iam_access_key" "circleci" {
+#   user = aws_iam_user.circleci.name
+# }
 
 data "template_file" "circleci_policy" {
   template = file("circleci_s3_access.tpl.json")
@@ -37,16 +37,16 @@ data "template_file" "circleci_policy" {
   }
 }
 
-resource "local_file" "circle_credentials" {
-  filename = "tmp/circleci_credentials"
-  content  = "${aws_iam_access_key.circleci.id}\n${aws_iam_access_key.circleci.secret}"
-}
+# resource "local_file" "circle_credentials" {
+#   filename = "tmp/circleci_credentials"
+#   content  = "${aws_iam_access_key.circleci.id}\n${aws_iam_access_key.circleci.secret}"
+# }
 
-resource "aws_iam_user_policy" "circleci" {
-  name   = "AllowCircleCI"
-  user   = aws_iam_user.circleci.name
-  policy = data.template_file.circleci_policy.rendered
-}
+# resource "aws_iam_user_policy" "circleci" {
+#   name   = "AllowCircleCI"
+#   user   = aws_iam_user.circleci.name
+#   policy = data.template_file.circleci_policy.rendered
+# }
 
 resource "aws_s3_bucket" "app" {
   tags = {
