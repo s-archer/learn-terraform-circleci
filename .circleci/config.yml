@@ -63,20 +63,26 @@ workflows:
   plan_approve_apply:
     jobs:
       - plan-apply
+          context: arch-aws
       - hold-apply:
+          context: arch-aws
           type: approval
           requires:
             - plan-apply
       - apply:
+          context: arch-aws
           requires:
             - hold-apply
       - plan-destroy:
+          context: arch-aws
           requires:
             - apply
       - hold-destroy:
+          context: arch-aws
           type: approval
           requires:
             - plan-destroy
       - destroy:
+          context: arch-aws
           requires:
             - hold-destroy
