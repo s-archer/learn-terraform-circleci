@@ -62,7 +62,7 @@ workflows:
   version: 2
   plan_approve_apply:
     jobs:
-      - plan-apply
+      - plan-apply:
           context: arch-aws
       - hold-apply:
           context: arch-aws
