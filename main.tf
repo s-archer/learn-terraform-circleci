@@ -4,7 +4,21 @@ terraform {
       source = "hashicorp/aws"
     }
   }
+  backend "s3" {
+    bucket = "1eb56d8e-cf1c-4b96-a26f-711e325d1c48-backend"
+    key    = "terraform/webapp/terraform.tfstate"
+    region = "eu-west-2"
+  }
 }
+
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
+}
+
 
 provider "aws" {
   region = var.region
