@@ -7,10 +7,10 @@ jobs:
       - image: hashicorp/terraform:light
     steps:
       - checkout
-      - working_directory: ./terraform/
       - run:
           name: terraform init & plan
           command: |
+            cd ./terraform
             terraform init -input=false
             terraform plan -out tfapply -var-file variables.tfvars
       - persist_to_workspace:
@@ -27,6 +27,7 @@ jobs:
       - run:
           name: terraform
           command: |
+            cd ./terraform
             terraform apply -auto-approve tfapply
       - persist_to_workspace:
           root: .
@@ -42,6 +43,7 @@ jobs:
       - run:
           name: terraform create destroy plan
           command: |
+            cd ./terraform
             terraform plan -destroy -out tfdestroy -var-file variables.tfvars
       - persist_to_workspace:
           root: .
@@ -57,6 +59,7 @@ jobs:
       - run:
           name: terraform destroy
           command: |
+            cd ./terraform
             terraform apply -auto-approve tfdestroy
 
 workflows:
