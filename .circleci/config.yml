@@ -2,11 +2,12 @@ version: 2
 
 jobs:
   plan-apply:
-    working_directory: ~/project/terraform/
+    working_directory: ~/project/
     docker:
       - image: hashicorp/terraform:light
     steps:
       - checkout
+      - working_directory: ./terraform/
       - run:
           name: terraform init & plan
           command: |
